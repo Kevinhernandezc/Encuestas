@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Encuestas.respuestasEncuestas>
+
+@{
+    ViewBag.Title = "respuestas";
+    
+}
+
+<h2>Respuestas de la Encuesta: @ViewBag.NombreEncuesta</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Respuesta
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.detalleEncuestas.nombreCampo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.respuesta)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fecha)
+    </td>
+</tr>
+}
+
+</table>

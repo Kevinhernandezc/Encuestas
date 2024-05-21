@@ -1,0 +1,58 @@
+﻿@model Encuestas.detalleEncuestas
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>detalleEncuestas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreCampo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreCampo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esRequerido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esRequerido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoCampo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoCampo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.encuestas.nombreEncuesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.encuestas.nombreEncuesta)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idDetalleEncuesta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="encuestasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="detalleEncuestas">
+          <Key>
+            <PropertyRef Name="idDetalleEncuesta" />
+          </Key>
+          <Property Name="idDetalleEncuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCampo" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="esRequerido" Type="bit" Nullable="false" />
+          <Property Name="tipoCampo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="idEncuesta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="encuestas">
+          <Key>
+            <PropertyRef Name="idEncuesta" />
+          </Key>
+          <Property Name="idEncuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreEncuesta" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="respuestasEncuestas">
+          <Key>
+            <PropertyRef Name="idRespuesta" />
+          </Key>
+          <Property Name="idRespuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="respuesta" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="idPregunta" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreUsuario" Type="varchar" MaxLength="150" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="detalleEncuesta">
+          <End Role="encuestas" Type="Self.encuestas" Multiplicity="1" />
+          <End Role="detalleEncuestas" Type="Self.detalleEncuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="encuestas">
+              <PropertyRef Name="idEncuesta" />
+            </Principal>
+            <Dependent Role="detalleEncuestas">
+              <PropertyRef Name="idEncuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="respuestaEncuesta">
+          <End Role="detalleEncuestas" Type="Self.detalleEncuestas" Multiplicity="1" />
+          <End Role="respuestasEncuestas" Type="Self.respuestasEncuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detalleEncuestas">
+              <PropertyRef Name="idDetalleEncuesta" />
+            </Principal>
+            <Dependent Role="respuestasEncuestas">
+              <PropertyRef Name="idPregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="encuestasModelStoreContainer">
+          <EntitySet Name="detalleEncuestas" EntityType="Self.detalleEncuestas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="encuestas" EntityType="Self.encuestas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="respuestasEncuestas" EntityType="Self.respuestasEncuestas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="detalleEncuesta" Association="Self.detalleEncuesta">
+            <End Role="encuestas" EntitySet="encuestas" />
+            <End Role="detalleEncuestas" EntitySet="detalleEncuestas" />
+          </AssociationSet>
+          <AssociationSet Name="respuestaEncuesta" Association="Self.respuestaEncuesta">
+            <End Role="detalleEncuestas" EntitySet="detalleEncuestas" />
+            <End Role="respuestasEncuestas" EntitySet="respuestasEncuestas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="encuestasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreUsuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="encuestasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+          <EntitySet Name="detalleEncuestas" EntityType="encuestasModel.detalleEncuestas" />
+          <EntitySet Name="encuestas" EntityType="encuestasModel.encuestas" />
+          <EntitySet Name="respuestasEncuestas" EntityType="encuestasModel.respuestasEncuestas" />
+          <AssociationSet Name="detalleEncuesta" Association="encuestasModel.detalleEncuesta">
+            <End Role="encuestas" EntitySet="encuestas" />
+            <End Role="detalleEncuestas" EntitySet="detalleEncuestas" />
+          </AssociationSet>
+          <AssociationSet Name="respuestaEncuesta" Association="encuestasModel.respuestaEncuesta">
+            <End Role="detalleEncuestas" EntitySet="detalleEncuestas" />
+            <End Role="respuestasEncuestas" EntitySet="respuestasEncuestas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="detalleEncuestas">
+          <Key>
+            <PropertyRef Name="idDetalleEncuesta" />
+          </Key>
+          <Property Name="idDetalleEncuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCampo" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="titulo" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="esRequerido" Type="Boolean" Nullable="false" />
+          <Property Name="tipoCampo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="idEncuesta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="encuestas" Relationship="encuestasModel.detalleEncuesta" FromRole="detalleEncuestas" ToRole="encuestas" />
+          <NavigationProperty Name="respuestasEncuestas" Relationship="encuestasModel.respuestaEncuesta" FromRole="detalleEncuestas" ToRole="respuestasEncuestas" />
+        </EntityType>
+        <EntityType Name="encuestas">
+          <Key>
+            <PropertyRef Name="idEncuesta" />
+          </Key>
+          <Property Name="idEncuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreEncuesta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="detalleEncuestas" Relationship="encuestasModel.detalleEncuesta" FromRole="encuestas" ToRole="detalleEncuestas" />
+        </EntityType>
+        <EntityType Name="respuestasEncuestas">
+          <Key>
+            <PropertyRef Name="idRespuesta" />
+          </Key>
+          <Property Name="idRespuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="respuesta" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="idPregunta" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="detalleEncuestas" Relationship="encuestasModel.respuestaEncuesta" FromRole="respuestasEncuestas" ToRole="detalleEncuestas" />
+        </EntityType>
+        <Association Name="detalleEncuesta">
+          <End Type="encuestasModel.encuestas" Role="encuestas" Multiplicity="1" />
+          <End Type="encuestasModel.detalleEncuestas" Role="detalleEncuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="encuestas">
+              <PropertyRef Name="idEncuesta" />
+            </Principal>
+            <Dependent Role="detalleEncuestas">
+              <PropertyRef Name="idEncuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="respuestaEncuesta">
+          <End Type="encuestasModel.detalleEncuestas" Role="detalleEncuestas" Multiplicity="1" />
+          <End Type="encuestasModel.respuestasEncuestas" Role="respuestasEncuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detalleEncuestas">
+              <PropertyRef Name="idDetalleEncuesta" />
+            </Principal>
+            <Dependent Role="respuestasEncuestas">
+              <PropertyRef Name="idPregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="encuestasModelStoreContainer" CdmEntityContainer="encuestasEntities">
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="encuestasModel.usuarios">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nombreUsuario" ColumnName="nombreUsuario" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detalleEncuestas">
+            <EntityTypeMapping TypeName="encuestasModel.detalleEncuestas">
+              <MappingFragment StoreEntitySet="detalleEncuestas">
+                <ScalarProperty Name="idEncuesta" ColumnName="idEncuesta" />
+                <ScalarProperty Name="tipoCampo" ColumnName="tipoCampo" />
+                <ScalarProperty Name="esRequerido" ColumnName="esRequerido" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="nombreCampo" ColumnName="nombreCampo" />
+                <ScalarProperty Name="idDetalleEncuesta" ColumnName="idDetalleEncuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="encuestas">
+            <EntityTypeMapping TypeName="encuestasModel.encuestas">
+              <MappingFragment StoreEntitySet="encuestas">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombreEncuesta" ColumnName="nombreEncuesta" />
+                <ScalarProperty Name="idEncuesta" ColumnName="idEncuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="respuestasEncuestas">
+            <EntityTypeMapping TypeName="encuestasModel.respuestasEncuestas">
+              <MappingFragment StoreEntitySet="respuestasEncuestas">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="idPregunta" ColumnName="idPregunta" />
+                <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+                <ScalarProperty Name="idRespuesta" ColumnName="idRespuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

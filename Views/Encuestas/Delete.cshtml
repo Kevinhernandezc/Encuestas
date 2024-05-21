@@ -1,0 +1,47 @@
+﻿@model Encuestas.encuestas
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Estas seguro de Eliminar esta encuesta?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <label class="control-label col-md-2">Nombre</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreEncuesta)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2">Descripcion</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            <label class="control-label col-md-2">Fecha</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,24 @@
+﻿@model List<Encuestas.detalleEncuestas>
+
+<form asp-action="encuestaGenerada" asp-controller="detalleEncuestas" method="post">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div>
+            <label>@Model[i].titulo</label>
+            <input type="hidden" name="[@i].idPregunta" value="@Model[i].idDetalleEncuesta" />
+            @switch (Model[i].tipoCampo)
+            {
+                case "Texto":
+                    <input type="text" name="[@i].respuesta" required="@Model[i].esRequerido" />
+                    break;
+                case "Numero":
+                    <input type="number" name="[@i].respuesta" required="@Model[i].esRequerido" />
+                    break;
+                case "Fecha":
+                    <input type="date" name="[@i].respuesta" required="@Model[i].esRequerido" />
+                    break;
+            }
+        </div>
+    }
+    <button type="submit">Enviar</button>
+</form>

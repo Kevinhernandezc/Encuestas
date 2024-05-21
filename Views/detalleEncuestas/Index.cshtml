@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Encuestas.detalleEncuestas>
+
+@{
+    ViewBag.Title = "Index";
+    var nombreEncuesta = Model.FirstOrDefault()?.encuestas?.nombreEncuesta ?? "Nombre no disponible";
+}
+
+<h2>Preguntas de la encuesta: @nombreEncuesta</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Titulo
+        </th>
+        <th>
+            Es Requerido
+        </th>
+        <th>
+            Tipo
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombreCampo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.esRequerido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipoCampo)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idDetalleEncuesta }) | 
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.idDetalleEncuesta })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Regresar", "Index","encuestas")
+</div>

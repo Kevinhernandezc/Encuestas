@@ -1,0 +1,63 @@
+﻿@model Encuestas.detalleEncuestas
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar pregunta</h2>
+
+<h3>Esta seguro de eliminar esta pregunta?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreCampo)
+        </dd>
+
+        <dt>
+            Titulo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titulo)
+        </dd>
+
+        <dt>
+            Es requerido?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esRequerido)
+        </dd>
+
+        <dt>
+            Tipo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoCampo)
+        </dd>
+
+        <dt>
+            Encuesta
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.encuestas.nombreEncuesta)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+    @Html.ActionLink("Regresar", "Index", new { id = 0 })
+</div>
+    }
+</div>
